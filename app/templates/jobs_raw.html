@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fetched Jobs</title>
+  <style>
+    body {
+      background: #f0f2f5;
+      font-family: "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    .navbar {
+      background: #0073e6;
+      color: #fff;
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logout-btn {
+      color: #fff;
+      text-decoration: none;
+      background: #005bb5;
+      padding: 8px 16px;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+
+    .logout-btn:hover {
+      background: #003f87;
+    }
+
+    .flash-messages {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: 90%;
+      max-width: 600px;
+    }
+
+    .message {
+      background: #0073e6;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    .container {
+      padding: 32px;
+    }
+
+    .job-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+      margin-top: 24px;
+    }
+
+    .job-card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease;
+    }
+
+    .job-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .job-card h4 {
+      margin-bottom: 10px;
+      font-size: 18px;
+      color: #0073e6;
+    }
+
+    .job-card p {
+      margin: 5px 0;
+      font-size: 14px;
+      color: #444;
+    }
+
+    .salary {
+      font-weight: 600;
+      color: #009900;
+    }
+
+    .btn a {
+      text-decoration: none;
+      background: #0073e6;
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-top: 12px;
+      transition: background 0.2s ease;
+    }
+
+    .btn a:hover {
+      background: #005bb5;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .pagination button {
+      background: #fff;
+      border: 1px solid #0073e6;
+      color: #0073e6;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .pagination button.active,
+    .pagination button:hover {
+      background: #0073e6;
+      color: #fff;
+    }
+
+    @media (max-width: 600px) {
+      .job-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Flash Messages -->
+  <div class="flash-messages">
+    <div class="message">Please wait while we fetch the perfect jobs for you...</div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <h2>Job Results</h2>
+    <a href="{{ url_for('routes.logout') }}" class="logout-btn">Logout</a>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container">
+    <h3>Fetched Jobs ({{ jobs|length }})</h3>
+
+    {% if jobs %}
+      <div class="job-grid" id="job-container">
+        <!-- Jobs will be injected here -->
+      </div>
+
+      <div class="pagination" id="pagination"></div>
+    {% else %}
+      <p>No jobs found that match your criteria.</p>
+    {% endif %}
+  </div>
+
+  <!-- JS for Flash & Pagination -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Auto-dismiss flash
+      setTimeout(() => {
+        const fm = document.querySelector('.flash-messages');
+        if (fm) {
+          fm.style.opacity = 0;
+          setTimeout(() => fm.remove(), 400);
+        }
+      }, 4000);
+
+      // Pagination logic
+      const jobs = {{ jobs|tojson }};
+      const jobsPerPage = 10;
+      let currentPage = 1;
+
+      function displayJobs(page) {
+        const start = (page - 1) * jobsPerPage;
+        const end = start + jobsPerPage;
+        const container = document.getElementById("job-container");
+        container.innerHTML = "";
+
+        jobs.slice(start, end).forEach(job => {
+          const jobCard = document.createElement("div");
+          jobCard.classList.add("job-card");
+
+          jobCard.innerHTML = `
+            <h4>${job.title}</h4>
+            ${job.company?.display_name ? `<p><strong>Company:</strong> ${job.company.display_name}</p>` : ""}
+            <p><strong>Location:</strong> ${job.location.display_name}</p>
+            ${job.salary_min || job.salary_max ? `
+              <p class="salary">
+                <strong>Salary:</strong>
+                ${job.salary_min ? job.salary_min.toLocaleString() : ""}
+                ${job.salary_max ? ` – ${job.salary_max.toLocaleString()}` : ""}
+              </p>` : ""}
+            <p><strong>Similarity:</strong> ${(job.match_score * 100).toFixed(2)}%</p>
+            <div class="btn">
+              <a href="${job.redirect_url}" target="_blank">View Details</a>
+            </div>
+          `;
+          container.appendChild(jobCard);
+        });
+      }
+
+      function setupPagination() {
+        const pageCount = Math.ceil(jobs.length / jobsPerPage);
+        const pagination = document.getElementById("pagination");
+        pagination.innerHTML = "";
+
+        if (pageCount <= 1) return;
+
+        const prevBtn = document.createElement("button");
+        prevBtn.textContent = "Prev";
+        prevBtn.disabled = currentPage === 1;
+        prevBtn.onclick = () => {
+          if (currentPage > 1) {
+            currentPage--;
+            displayJobs(currentPage);
+            setupPagination();
+          }
+        };
+        pagination.appendChild(prevBtn);
+
+        for (let i = 1; i <= pageCount; i++) {
+          const btn = document.createElement("button");
+          btn.textContent = i;
+          if (i === currentPage) btn.classList.add("active");
+          btn.onclick = () => {
+            currentPage = i;
+            displayJobs(currentPage);
+            setupPagination();
+          };
+          pagination.appendChild(btn);
+        }
+
+        const nextBtn = document.createElement("button");
+        nextBtn.textContent = "Next";
+        nextBtn.disabled = currentPage === pageCount;
+        nextBtn.onclick = () => {
+          if (currentPage < pageCount) {
+            currentPage++;
+            displayJobs(currentPage);
+            setupPagination();
+          }
+        };
+        pagination.appendChild(nextBtn);
+      }
+
+      displayJobs(currentPage);
+      setupPagination();
+    });
+  </script>
+</body>
+</html>

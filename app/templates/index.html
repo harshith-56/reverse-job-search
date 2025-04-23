@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login & Signup Form</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="message {{ category }}-message" id="flash-message">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <div class="wrapper">
+    <div class="main-heading">Login & Signup</div>
+
+    <div class="slide-controls">
+      <input type="radio" name="slide" id="login" checked>
+      <input type="radio" name="slide" id="signup">
+      <label for="login" class="slide login">Login</label>
+      <label for="signup" class="slide signup">Signup</label>
+      <div class="slider-tab"></div>
+    </div>
+
+    <div class="form-container">
+      <div class="form-inner">
+        <!-- Login Form -->
+        <form action="{{ url_for('routes.login') }}" method="POST" class="login">
+          <div class="field">
+            <input type="email" name="email" placeholder="Email" required>
+          </div>
+          <div class="field password-field">
+            <input type="password" name="password" id="login-password" placeholder="Password" required>
+            <span class="toggle-password" toggle="#login-password">👁️<i class="fas fa-eye"></i></span>
+          </div>
+          <div class="field btn">
+            <div class="btn-layer"></div>
+            <input type="submit" value="Login">
+          </div>
+        </form>
+
+        <!-- Signup Form -->
+        <form action="{{ url_for('routes.signup') }}" method="POST" class="signup">
+          <div class="field">
+            <input type="email" name="email" placeholder="Email" required>
+          </div>
+          <div class="field password-field">
+            <input type="password" name="password" id="signup-password" placeholder="Password" required>
+            <span class="toggle-password" toggle="#signup-password">👁️<i class="fas fa-eye"></i></span>
+          </div>
+          <div class="field password-field">
+            <input type="password" name="confirm_password" id="confirm-password" placeholder="Confirm Password" required>
+            <span class="toggle-password" toggle="#confirm-password">👁️<i class="fas fa-eye"></i></span>
+          </div>
+          <div class="field btn">
+            <div class="btn-layer"></div>
+            <input type="submit" value="Signup">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

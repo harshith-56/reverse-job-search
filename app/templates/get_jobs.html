@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Choose Preferences & Fetch Jobs</title>
+  <link rel="stylesheet" href="{{ url_for('static',filename='get_jobs.css') }}">
+</head>
+<body>
+  <div class="preference-box">
+    <h2>Enter Job Preferences</h2>
+
+    <!-- 🔔 Loading Message -->
+    <div id="loading-message" style="display: none; color: green; font-weight: bold; margin-bottom: 10px;">
+      Please wait while we fetch the perfect jobs for you...
+    </div>
+
+    <form action="{{ url_for('routes.submit_preferences') }}" method="post">
+      <label for="country">Country:</label>
+      <select name="country" id="country" required>
+        <option value="" disabled selected>Select Country</option>
+      </select>
+
+      <label for="city">City (optional):</label>
+      <select name="city" id="city">
+        <option value="" disabled selected>Select City (optional)</option>
+      </select>
+
+      <button type="submit">Fetch Jobs</button>
+    </form>
+  </div>
+
+  <script>
+    const citiesData = {{ cities_data|tojson }};
+    const countrySelect = document.getElementById('country');
+    const citySelect = document.getElementById('city');
+
+    // Populate country dropdown
+    Object.keys(citiesData).forEach(country => {
+      countrySelect.add(new Option(country.toUpperCase(), country));
+    });
+
+    countrySelect.addEventListener('change', () => {
+      citySelect.innerHTML = '<option value="" disabled selected>Select City (optional)</option>';
+      if (citiesData[countrySelect.value]) {
+        citiesData[countrySelect.value].forEach(city => {
+          citySelect.add(new Option(city, city));
+        });
+      }
+    });
+
+    // 🟢 Show loading message on form submission
+    const form = document.querySelector('form');
+    form.addEventListener('submit', () => {
+      document.getElementById('loading-message').style.display = 'block';
+    });
+  </script>
+</body>
+</html>

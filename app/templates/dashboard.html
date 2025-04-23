@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}"/>
+</head>
+<body>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flash-messages">
+            {% for category, message in messages %}
+            <div class="message {{ category }}-message" id="flash-message">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    {% endwith %}
+
+    <nav class="navbar">
+        <h2>Job Search Dashboard</h2>
+        <a href="{{ url_for('routes.logout') }}" class="logout-btn">Logout</a>
+    </nav>
+
+    <div class="container">
+
+        <div class="dashboard-card">
+            <h3>Upload Your Resume</h3>
+            <form action="{{ url_for('routes.upload_resume') }}" method="post" enctype="multipart/form-data" class="upload-form">
+                <input type="file" name="resume" accept=".pdf" required>
+                <button type="submit">Upload</button>
+            </form>
+
+            {% if current_user.resume_filename %}
+            <div class="resume-section">
+                <h4>Your Uploaded Resume</h4>
+                <div class="resume-info">
+                    <a href="{{ url_for('static', filename='uploads/' + current_user.resume_filename) }}" class="resume-link" target="_blank">View Resume</a>
+                    <form action="{{ url_for('routes.delete_resume') }}" method="post" class="delete-form">
+                        <button type="submit" class="delete-btn">Delete</button>
+                    </form>
+                </div>
+            </div>
+            {% else %}
+            <p class="no-resume">No resume uploaded yet.</p>
+            {% endif %}
+        </div>
+
+        {% if details %}
+        <div class="resume-details">
+            <h3>Your Resume Details</h3>
+            <p><strong>Experience Years:</strong> {{ details.experience_years or 0 }}</p>
+            <p><strong>Skills:</strong> {{ details.skills or 'N/A' }}</p>
+            <p><strong>Projects:</strong> {{ details.projects | join(', ') if details.projects else 'N/A' }}</p>
+            <p><strong>Experience:</strong> {{ details.experience | join(', ') if details.experience else 'N/A' }}</p>
+            <p><strong>Suggested Roles:</strong></p>
+            <ul>
+                {% for role in details.roles %}
+                <li>{{ role }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="get-jobs-btn-container">
+            <form action="{{ url_for('routes.get_jobs') }}" method="get">
+                <button type="submit" class="get-jobs-btn">Get Jobs</button>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const message = document.querySelector(".flash-messages");
+            if (message) {
+                setTimeout(() => {
+                    message.style.opacity = "0";
+                    setTimeout(() => message.remove(), 500);
+                }, 10000);
+            }
+        });
+        document.addEventListener("DOMContentLoaded", function () {
+        const message = document.querySelector(".flash-messages");
+        if (message) {
+            setTimeout(() => {
+                message.style.opacity = "0";
+                setTimeout(() => message.remove(), 500);
+            }, 10000);
+        }
+
+        // 🚀 Show loading message instantly when Get Jobs is clicked
+        const getJobsForm = document.querySelector(".get-jobs-btn-container form");
+        getJobsForm.addEventListener("submit", function () {
+            const existing = document.querySelector(".flash-messages");
+            if (!existing) {
+                const div = document.createElement("div");
+                div.className = "flash-messages";
+                div.innerHTML = `<div class="message info-message">Please wait while we fetch the perfect jobs for you...</div>`;
+                document.body.prepend(div);
+            }
+        });
+    });
+    </script>
+</body>
+</html>

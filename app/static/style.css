@@ -1,0 +1,270 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+html, body {
+  display: grid;
+  height: 100%;
+  width: 100%;
+  place-items: center;
+  background: linear-gradient(to right, #003366, #004080, #0059b3, #0073e6);
+}
+
+::selection {
+  background: #1a75ff;
+  color: #fff;
+}
+
+.wrapper {
+  width: 400px;
+  background: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0px 15px 20px rgba(0,0,0,0.1);
+}
+
+.main-heading {
+  text-align: center;
+  color: #003366;
+  font-size: 24px;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #0073e6;
+}
+
+/* Flash messages */
+.message {
+  text-align: center;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  font-weight: 500;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.success-message {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.error-message {
+  background-color: #f44336;
+  color: white;
+}
+
+/* Form toggle controls */
+.slide-controls {
+  display: flex;
+  height: 50px;
+  width: 100%;
+  justify-content: space-between;
+  border: 1px solid lightgrey;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.slide {
+  width: 100%;
+  text-align: center;
+  line-height: 50px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 500;
+  z-index: 1;
+  color: #003366;
+  transition: all 0.6s ease;
+}
+
+.slider-tab {
+  position: absolute;
+  height: 100%;
+  width: 50%;
+  left: 0;
+  background: linear-gradient(to right, #003366, #004080, #0059b3, #0073e6);
+  border-radius: 15px;
+  transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  z-index: 0;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+#signup:checked ~ .slider-tab {
+  left: 50%;
+}
+
+#signup:checked ~ label.signup,
+#login:checked ~ label.login {
+  color: #fff;
+}
+
+/* Form layout */
+.form-container {
+  overflow: hidden;
+  width: 100%;
+}
+
+.form-inner {
+  display: flex;
+  width: 200%;
+  transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.form-inner form {
+  width: 50%;
+}
+
+#login:checked ~ .form-container .form-inner {
+  margin-left: 0;
+}
+
+#signup:checked ~ .form-container .form-inner {
+  margin-left: -100%;
+}
+
+.field {
+  margin-top: 15px;
+}
+
+.field input {
+  width: 100%;
+  height: 50px;
+  padding-left: 15px;
+  border: 1px solid lightgrey;
+  border-radius: 15px;
+  font-size: 17px;
+  outline: none;
+}
+
+.field input:focus {
+  border-color: #1a75ff;
+}
+
+.pass-link, .signup-link {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.pass-link a, .signup-link a {
+  color: #1a75ff;
+  text-decoration: none;
+}
+
+.pass-link a:hover, .signup-link a:hover {
+  text-decoration: underline;
+}
+
+/* Submit button */
+.btn {
+  height: 50px;
+  width: 100%;
+  border-radius: 15px;
+  margin-top: 15px;
+  overflow: hidden;
+  position: relative;
+}
+
+.btn .btn-layer {
+  position: absolute;
+  height: 100%;
+  width: 300%;
+  left: -100%;
+  background: linear-gradient(to right, #003366, #004080, #0059b3, #0073e6);
+  border-radius: 15px;
+  transition: all 0.4s ease;
+  z-index: 0;
+}
+
+.btn:hover .btn-layer {
+  left: 0;
+}
+
+.btn input[type="submit"] {
+  height: 100%;
+  width: 100%;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+}
+
+/* Password field with toggle */
+.password-field {
+  position: relative;
+}
+
+.password-field input {
+  padding-right: 40px;
+  border-radius: 15px;
+}
+
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 18px;
+  color: #003366;
+}
+
+/* Dashboard-specific */
+.resume-link {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.delete-btn {
+  background-color: red;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+input[type="file"],
+input[type="submit"] {
+  margin-top: 10px;
+}
+/* Submit button */
+
+
+/* Submit button */
+.btn {
+    height: 50px;
+    width: 100%;
+    border-radius: 15px;
+    margin-top: 15px;
+    overflow: hidden;
+    position: relative;
+    background-color: #4CAF50; /* Example background color */
+    color: white; /* Text color */
+    font-size: 16px; /* Adjust the font size */
+    font-weight: bold; /* Make text bold */
+    border: none; /* Remove default border */
+    text-align: center; /* Center the text */
+    display: flex;
+    justify-content: center; /* Center text horizontally */
+    align-items: center; /* Center text vertically */
+    cursor: pointer; /* Change cursor to pointer */
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+  }
+  
+  /* Hover effect for the button */
+  .btn:hover {
+    background-color: #45a049; /* Darker green on hover */
+  }
+  

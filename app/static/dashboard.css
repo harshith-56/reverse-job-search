@@ -1,0 +1,275 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: linear-gradient(to right, #001F3F, #003366, #004080, #0059b3);
+    color: white;
+    text-align: center;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background: #001F3F;
+    border-bottom: 2px solid #004080;
+}
+
+.navbar h2 {
+    font-size: 24px;
+    color: white;
+}
+
+.logout-btn {
+    background: #ff4d4d;
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 30px;
+    font-weight: bold;
+    transition: 0.3s ease;
+}
+
+.logout-btn:hover {
+    background: #cc0000;
+}
+
+/* Main Container */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    padding: 40px 20px;
+    min-height: 80vh;
+}
+
+/* Upload Card */
+.dashboard-card {
+    background: white;
+    color: #003366;
+    padding: 30px 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+}
+
+.dashboard-card h3 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.dashboard-card input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    margin-bottom: 15px;
+    background-color: #f9f9f9;
+}
+
+.dashboard-card button {
+    width: 100%;
+    padding: 14px;
+    background: #0073e6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.dashboard-card button:hover {
+    background: #0059b3;
+}
+
+/* Resume Section */
+.resume-section {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f4f4f4;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.resume-section h4 {
+    color: #003366;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.resume-link {
+    display: block;
+    text-decoration: none;
+    color: #0073e6;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.resume-link:hover {
+    color: #0059b3;
+}
+
+.delete-form {
+    margin-top: 10px;
+}
+
+.delete-btn {
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.3s ease;
+}
+
+.delete-btn:hover {
+    background: #cc0000;
+}
+
+.show-details-btn {
+    background-color: #0073e6;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s ease;
+    margin-top: 20px;
+}
+
+.show-details-btn:hover {
+    background-color: #005bb5;
+}
+
+.no-resume {
+    margin-top: 15px;
+    font-style: italic;
+    color: #ccc;
+}
+
+/* Resume Details */
+.resume-details {
+    background-color: white;
+    color: #333;
+    padding: 25px 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    max-width: 700px;
+    width: 100%;
+}
+
+.resume-details h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.resume-details p {
+    font-size: 16px;
+    margin-bottom: 12px;
+    color: #555;
+}
+
+.resume-details ul {
+    text-align: left;
+    margin: 0 auto;
+    padding-left: 20px;
+    max-width: 500px;
+}
+
+.resume-details li {
+    font-size: 15px;
+    margin-bottom: 6px;
+}
+
+/* Flash Messages */
+.flash-messages {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+.message {
+    padding: 12px 20px;
+    margin: 5px 0;
+    border-radius: 8px;
+    font-size: 16px;
+    color: #fff;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+.success-message {
+    background-color: green;
+}
+
+.error-message {
+    background-color: red;
+}
+
+.warning-message {
+    background-color: orange;
+}
+
+.info-message {
+    background-color: blue;
+}
+.get-jobs-btn-container {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.get-jobs-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.get-jobs-btn:hover {
+    background-color: #0056b3;
+}
+
+
+.flash-messages {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #f1f1f1;
+    border-radius: 10px;
+    padding: 15px 25px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    z-index: 9999;
+    font-size: 16px;
+    transition: opacity 0.5s ease;
+}
+
+.message.info-message {
+    background-color: #d0eaff;
+    color: #004a7f;
+}

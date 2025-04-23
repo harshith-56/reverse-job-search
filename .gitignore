@@ -1,0 +1,70 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+ENV/
+env/
+.venv/
+
+# Python egg files
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Flask & Python app config
+instance/
+*.db
+*.sqlite3
+
+# Logs and cache
+*.log
+*.out
+*.bak
+*.swp
+*.tmp
+.cache/
+coverage/
+htmlcov/
+.pytest_cache/
+
+# Environment variables
+.env
+.env.*
+
+# Uploads (optional - if you're storing user resumes locally)
+uploads/
+*.pdf
+*.docx
+*.jpg
+*.jpeg
+*.png
+
+# IDE & Editor folders
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# System files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Mac/Linux crash logs
+core
+
+# Windows executable files (if any accidentally created)
+*.exe
+*.dll
+
+# VS Code debugger launch config (if you don’t want to share it)
+launch.json

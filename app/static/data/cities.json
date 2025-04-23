@@ -1,0 +1,7 @@
+{
+    "IN": ["Mumbai","Delhi","Bengaluru","Hyderabad","Chennai","Kolkata"],
+    "US": ["New York","San Francisco","Chicago","Austin","Seattle","Boston"],
+    "CA": ["Toronto","Vancouver","Montreal","Calgary","Ottawa"],
+    "GB": ["London","Manchester","Birmingham","Leeds","Glasgow"]
+  }
+  
